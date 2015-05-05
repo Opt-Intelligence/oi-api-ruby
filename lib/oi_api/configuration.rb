@@ -1,5 +1,4 @@
 require 'oi_api/version'
-require 'pry'
 
 module OiApi
 
