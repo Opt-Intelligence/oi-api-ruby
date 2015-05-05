@@ -18,23 +18,48 @@ module OiApi
       'Travel' => 1012,
     }
 
-    DATA_POINTS = {
-      FN:  { dynamic_field_value: '#{FN}',  description: 'First Name' },
-      LN:  { dynamic_field_value: '#{LN}',  description: 'Last Name' },
-      EM:  { dynamic_field_value: '#{EM}',  description: 'Email' },
-      AD1: { dynamic_field_value: '#{AD1}', description: 'Street Address' },
-      CI:  { dynamic_field_value: '#{CI}',  description: 'City' },
-      ST:  { dynamic_field_value: '#{ST}',  description: 'State' },
-      PO:  { dynamic_field_value: '#{PO}',  description: 'Postal Code' },
-      CO:  { dynamic_field_value: '#{CO}',  description: 'Country' },
-      HP:  { dynamic_field_value: '#{HP}',  description: 'Home Phone Number' },
-      MP:  { dynamic_field_value: '#{MP}',  description: 'Mobile Phone Number' },
-      G:   { dynamic_field_value: '#{G}',   description: 'Gender' },
-      DOB: { dynamic_filed_value: '#{DOB}', description: 'Date of Birth' }
+    DATA_FIELDS = {
+      first_name:     { value: 'FN',  field_value: '#{FN}',  description: 'First Name' },
+      last_name:      { value: 'LN',  field_value: '#{LN}',  description: 'Last Name' },
+      email:          { value: 'EM',  field_value: '#{EM}',  description: 'Email' },
+      street_address: { value: 'AD1', field_value: '#{AD1}', description: 'Street Address' },
+      city:           { value: 'CI',  field_value: '#{CI}',  description: 'City' },
+      state:          { value: 'ST',  field_value: '#{ST}',  description: 'State' },
+      postal_code:    { value: 'PO',  field_value: '#{PO}',  description: 'Postal Code' },
+      country:        { value: 'CO',  field_value: '#{CO}',  description: 'Country' },
+      home_phone:     { value: 'HP',  field_value: '#{HP}',  description: 'Home Phone Number' },
+      mobile_phone:   { value: 'MP',  field_value: '#{MP}',  description: 'Mobile Phone Number' },
+      gender:         { value: 'G',   field_value: '#{G}',   description: 'Gender' },
+      date_of_birth:  { value: 'DOB', field_value: '#{DOB}', description: 'Date of Birth' }
     }
 
-    def category_names
+    def self.category_names
       CATEGORIES.keys
+    end
+
+    def self.category_ids
+      CATEGORIES.values
+    end
+
+    #  returns an array of hashes used when posting to OiApi
+    #  to create a new data transfer. The resulting structure
+    #  looks like:
+    #  [
+    #    { email: '#{EM}' },
+    #    { first_name: '#{FN}' },
+    #    { last_name: '#{LN}' },
+    #    { zip: '#{PO}' },
+    #    { gender: '#{G}' },
+    #    ...
+    #  ]
+    #
+    #  This tells OiApi what attribute names to use when posting
+    #  contacts back to our endpoint
+    #
+    def self.data_fields
+      OiApi::LookupTables::DATA_FIELDS.map do |data_point|
+        { data_point[0] => data_point[1][:field_value] }
+      end
     end
 
   end
