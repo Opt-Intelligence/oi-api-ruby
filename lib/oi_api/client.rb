@@ -9,6 +9,7 @@ require 'oi_api/client/offers'
 require 'oi_api/client/data_transfers'
 require 'oi_api/client/auto_responders'
 require 'oi_api/client/reports'
+require 'oi_api/errors'
 
 module OiApi
 
@@ -37,6 +38,10 @@ module OiApi
       # not part of our configuration
       OiApi::Configuration::VALID_CONFIG_KEYS.each do |key|
         public_send("#{key}=", merged_options[key])
+      end
+
+      if username.nil? || password.nil?
+        raise NoCredentialsError, 'you must provide a username and password'
       end
 
       # set base_uri and format via HTTParty class methods
