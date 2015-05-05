@@ -6,6 +6,10 @@ RSpec.describe OiApi do
     expect(OiApi::VERSION).to be_instance_of(String)
   end
 
+  it 'raises an error when instantiated with no username and password' do
+    expect { OiApi.new }.to raise_error(OiApi::NoCredentialsError)
+  end
+
   context 'configuration' do
 
     context '.username' do
