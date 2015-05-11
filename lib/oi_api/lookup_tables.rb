@@ -19,18 +19,18 @@ module OiApi
     }
 
     DATA_FIELDS = {
-      first_name:     { value: 'FN',  field_value: '#{FN}',  description: 'First Name' },
-      last_name:      { value: 'LN',  field_value: '#{LN}',  description: 'Last Name' },
-      email:          { value: 'EM',  field_value: '#{EM}',  description: 'Email' },
-      street_address: { value: 'AD1', field_value: '#{AD1}', description: 'Street Address' },
-      city:           { value: 'CI',  field_value: '#{CI}',  description: 'City' },
-      state:          { value: 'ST',  field_value: '#{ST}',  description: 'State' },
-      postal_code:    { value: 'PO',  field_value: '#{PO}',  description: 'Postal Code' },
-      country:        { value: 'CO',  field_value: '#{CO}',  description: 'Country' },
-      home_phone:     { value: 'HP',  field_value: '#{HP}',  description: 'Home Phone Number' },
-      mobile_phone:   { value: 'MP',  field_value: '#{MP}',  description: 'Mobile Phone Number' },
-      gender:         { value: 'G',   field_value: '#{G}',   description: 'Gender' },
-      date_of_birth:  { value: 'DOB', field_value: '#{DOB}', description: 'Date of Birth' }
+      first_name:     { oi_name: 'FN',  field_value: '#{FN}',  description: 'First Name' },
+      last_name:      { oi_name: 'LN',  field_value: '#{LN}',  description: 'Last Name' },
+      email:          { oi_name: 'EM',  field_value: '#{EM}',  description: 'Email' },
+      street_address: { oi_name: 'AD1', field_value: '#{AD1}', description: 'Street Address' },
+      city:           { oi_name: 'CI',  field_value: '#{CI}',  description: 'City' },
+      state:          { oi_name: 'ST',  field_value: '#{ST}',  description: 'State' },
+      postal_code:    { oi_name: 'PO',  field_value: '#{PO}',  description: 'Postal Code' },
+      country:        { oi_name: 'CO',  field_value: '#{CO}',  description: 'Country' },
+      home_phone:     { oi_name: 'HP',  field_value: '#{HP}',  description: 'Home Phone Number' },
+      mobile_phone:   { oi_name: 'MP',  field_value: '#{MP}',  description: 'Mobile Phone Number' },
+      gender:         { oi_name: 'G',   field_value: '#{G}',   description: 'Gender' },
+      date_of_birth:  { oi_name: 'DOB', field_value: '#{DOB}', description: 'Date of Birth' }
     }
 
     def self.category_names
@@ -57,9 +57,13 @@ module OiApi
     #  contacts back to our endpoint
     #
     def self.data_fields
-      OiApi::LookupTables::DATA_FIELDS.map do |data_point|
+      DATA_FIELDS.map do |data_point|
         { data_point[0] => data_point[1][:field_value] }
       end
+    end
+
+    def self.data_field_oi_name(field_name)
+      DATA_FIELDS[field_name][:oi_name]
     end
 
   end
