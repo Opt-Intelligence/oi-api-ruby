@@ -21,6 +21,10 @@ RSpec.describe OiApi::LookupTables do
       ])
     end
 
+    it 'returns the OI name for a given data point' do
+      expect(OiApi::LookupTables.data_field_oi_name(:first_name)).to eql('FN')
+    end
+
   end
 
 end
